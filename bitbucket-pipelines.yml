@@ -1,0 +1,20 @@
+image: maven:3.3.9
+pipelines:
+   default:
+   -  step:
+         name: Build
+         trigger: automatic
+         caches:
+         - maven # Cache any dependencies we download, speeds up build times.
+         script:
+         - mvn clean # Ensure all artifacts build successfully before we attempt deploy in order to prevent partial deploys.
+   -  step:
+         name: Increment Version
+         caches:
+         - maven # Cache any dependencies we download, speeds up build times.
+         trigger: manual
+         script:
+         - git config --global user.email "$GIT_USER_EMAIL"
+         - git config --global user.name "$GIT_USER_NAME"
+         #- mvn -B -DdryRun=true release:prepare # Ensure that most things will run properly before we do the real work.
+         - mvn -B release:clean release:prepare # This bumps the versions in the poms, creates new commits, which will then get built by the master branch trigger.

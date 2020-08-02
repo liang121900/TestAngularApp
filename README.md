@@ -1,6 +1,35 @@
-# AngularApp
+This is the front end angular app for the product website.
+ 
+Building:
+    ng build --configuration=uat/prod
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.5.
+Building docker image:
+    docker build --build-arg ENV=production -t tony-web .
+
+Push image to docker hub
+    docker image tag d1a liang121900/tony-front-angular:TPWA-3
+    docker push liang121900/tony-front-angular:TPWA-3
+
+Pulling images
+    docker pull liang121900/tony-front-angular:TPWA-3
+
+Deploy instruction:
+Docker:
+
+build docker image for angular app:
+
+docker image build -t tony-webapp-angular .
+
+run container: 
+
+docker container run -p 3000:80 -d tony-webapp-angular
+
+go to localhost:3000
+
+
+# Ultimate
+
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.0.
 
 ## Development server
 
